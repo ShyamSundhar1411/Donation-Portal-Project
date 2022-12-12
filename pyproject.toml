@@ -10,6 +10,7 @@ Django = "^4.1.4"
 Pillow = "^9.3.0"
 django-crispy-forms = "^1.14.0"
 django-import-export = "^3.0.1"
+django-phone-auth = "^0.3.1"
 
 [tool.poetry.dev-dependencies]
 Django = "^4.1.4"
