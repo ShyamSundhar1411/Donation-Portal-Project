@@ -24,5 +24,6 @@ urlpatterns = [
     path('',views.home,name = "home"),
     #Auth
     path('accounts/', include('phone_auth.urls')),
+    path('services/',include("services.urls")),
 ]
 urlpatterns+=static(settings.STATIC_URL,document_root = settings.STATIC_ROOT)

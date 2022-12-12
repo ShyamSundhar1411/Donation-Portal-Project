@@ -8,3 +8,7 @@ BLOOD_CHOICES=[
     ('AB +ve','AB +ve'),
     ('AB -ve', 'AB -ve'),
 ]
+ROLE_CHOICES = [
+    ("Admin","Admin"),
+    ("Donor","Donor"),
+]

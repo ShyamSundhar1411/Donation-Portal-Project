@@ -5,9 +5,10 @@ from .choices import *
 
 class Donor(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
+    role = models.CharField(max_length = 100,choices = ROLE_CHOICES,default = "Donor")
     blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
     address = models.TextField(max_length=300)
-    last_donated = models.DateField(blank=True)
-    def __str__(self) -> str:
-        return self.user.phonenumbers
+    last_donated = models.DateField(blank=True,null = True)
+    def __str__(self):
+        return self.user.username
 
