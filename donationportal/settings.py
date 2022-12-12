@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "services",
     "crispy_bootstrap5",
     "crispy_forms",
-    "django_import_export",
+    "import_export",
 ]
 
 MIDDLEWARE = [
@@ -129,3 +129,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+#Static Serves
+#Static Serves
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR/'media'# or any prefix you choose
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'donationportal/static',
+]
