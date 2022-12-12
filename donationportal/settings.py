@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #3rd party apps
-    "services",
-    "crispy_bootstrap5",
-    "crispy_forms",
-    "import_export",
+    'services',
+    'crispy_bootstrap5',
+    'crispy_forms',
+    'import_export',
+    'phone_auth',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +121,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+
+
+
+# PhoneAuth
+AUTHENTICATION_METHODS = {'phone', 'email'}
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `django-phone-auth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `django-phone-auth` specific authentication methods, such as login by phone/email/username.
+    'phone_auth.backend.CustomAuthBackend',
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
