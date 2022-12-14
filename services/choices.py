@@ -6,9 +6,9 @@ BLOOD_CHOICES=[
     ('B +ve','B +ve',),
     ('B -ve','B -ve',),
     ('AB +ve','AB +ve'),
-    ('AB -ve', 'AB -ve'),
-]
+    ('AB -ve', 'AB -ve')]
 ROLE_CHOICES = [
     ("Admin","Admin"),
     ("Donor","Donor"),
+    ("Unauthorized", "Unauthorized"),
 ]

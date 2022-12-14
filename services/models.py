@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from .choices import *
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 
@@ -15,3 +17,13 @@ class Donor(models.Model):
         return self.user.username
     
 
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Donor.objects.create(user=instance, role="Unauthorized",address=" ")
+        instance.donor.save()
+
+
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, **kwargs):
+    instance.donor.save()
