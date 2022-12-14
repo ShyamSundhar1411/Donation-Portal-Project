@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from .choices import *
+from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 
 class Donor(models.Model):
@@ -9,6 +10,8 @@ class Donor(models.Model):
     blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
     address = models.TextField(max_length=300)
     last_donated = models.DateField(blank=True,null = True)
+    contact = PhoneNumberField(blank=True)
     def __str__(self):
         return self.user.username
+    
 

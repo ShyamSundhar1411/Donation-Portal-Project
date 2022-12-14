@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'crispy_forms',
     'import_export',
-    'phone_auth',
+    "phonenumber_field",
 ]
 
 MIDDLEWARE = [
@@ -152,3 +152,5 @@ MEDIA_ROOT = BASE_DIR/'media'# or any prefix you choose
 STATICFILES_DIRS = [
     BASE_DIR / 'donationportal/static',
 ]
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = 'home'

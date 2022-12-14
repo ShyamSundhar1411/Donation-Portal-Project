@@ -17,13 +17,14 @@ from django.contrib import admin
 from django.urls import include,path
 from services import views
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name = "home"),
     #Auth
-    path('accounts/', include('phone_auth.urls')),
     path('services/',include("services.urls")),
+    path('logout/',auth_views.LogoutView.as_view(),name = "logout")
 ]
 urlpatterns+=static(settings.STATIC_URL,document_root = settings.STATIC_ROOT)
