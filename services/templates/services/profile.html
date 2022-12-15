@@ -1,4 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Profile</h1>
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+<div class="container">
+        <div class = "row">
+            <div class="col-md-12 col-sm-12">
+                <form method = 'POST' enctype = 'multipart/form-data'>
+                    {% csrf_token %}
+                    <h3 class = "card-text text-center">{{user.username}}'s Profile</h3>
+                    <div class="card card-body border border-dark">
+                        <div class="row form-row">
+                        </div>
+                        <div class="row form-row">
+                            <div class = "col">
+                                {{form.contact|as_crispy_field}}
+                            </div>
+                            <div class = "col">
+                                {{form.blood_type|as_crispy_field}}
+                            </div>
+                            <div class = "col">
+                                {{form.last_donated|as_crispy_field}}
+                            </div>
+                        </div>
+                        <div class="row form-row">
+                            <div class = "col">
+                                {{form.address|as_crispy_field}}
+                            </div>
+                        </div>
+                        <div class = "d-inline-block py-3">
+                            <button type = "submit" class = "margin-bottom btn btn-primary me-2 py-1">Update/Verify Profile</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
 {% endblock %}
