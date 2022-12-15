@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'import_export',
     "phonenumber_field",
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -107,12 +110,20 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -153,3 +164,19 @@ STATICFILES_DIRS = [
 ]
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = 'home'
+
+ACCOUNT_RATE_LIMITS = {
+    # Change password view (for users already logged in)
+    "change_password": "5/m",
+    # Email management (e.g. add, remove, change primary)
+    "manage_email": "10/m",
+    # Request a password reset, global rate limit per IP
+    "reset_password": "20/m",
+    # Rate limit measured per individual email address
+    "reset_password_email": "5/m",
+    # Password reset (the view the password reset email links to).
+    "reset_password_from_key": "20/m",
+    # Signups.
+    "signup": "20/m",
+    # NOTE: Login is already protected via `ACCOUNT_LOGIN_ATTEMPTS_LIMIT`
+}
