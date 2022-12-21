@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +44,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'import_export',
     "phonenumber_field",
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -106,12 +110,20 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -120,8 +132,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-
 
 
 
@@ -141,8 +151,32 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'# or any prefix you choose
 
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-secondary',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
 STATICFILES_DIRS = [
     BASE_DIR / 'donationportal/static',
 ]
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = 'home'
+
+ACCOUNT_RATE_LIMITS = {
+    # Change password view (for users already logged in)
+    "change_password": "5/m",
+    # Email management (e.g. add, remove, change primary)
+    "manage_email": "10/m",
+    # Request a password reset, global rate limit per IP
+    "reset_password": "20/m",
+    # Rate limit measured per individual email address
+    "reset_password_email": "5/m",
+    # Password reset (the view the password reset email links to).
+    "reset_password_from_key": "20/m",
+    # Signups.
+    "signup": "20/m",
+    # NOTE: Login is already protected via `ACCOUNT_LOGIN_ATTEMPTS_LIMIT`
+}

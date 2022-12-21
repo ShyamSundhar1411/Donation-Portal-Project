@@ -1,0 +1,34 @@
+{% for message in messages %}
+{% if forloop.last %}
+<div class="container-fluid py-2" id = 'message' style = "display:none;">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close" id = "custom">
+    </button>
+    <div class = "text-center">
+      {{message}}
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+{% for message in messages %}
+<script>
+$(message)
+    .css('opacity', 0)
+    .slideDown('slow')
+    .animate(
+      { opacity: 1 },
+      { queue: false, duration: 'slow' }
+);
+$('.alert').click(function(){
+$(message)
+  $(message).animate({height:0, opacity: 0}, 2000);
+});
+ window.setTimeout(function() {
+      $("#message").slideUp(500, function() {
+          $(this).remove();
+      });
+  }, 6000);
+</script>
+{% endfor %}
