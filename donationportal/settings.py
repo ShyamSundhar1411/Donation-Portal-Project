@@ -124,15 +124,7 @@ USE_TZ = True
 
 
 
-# PhoneAuth
-AUTHENTICATION_METHODS = {'phone', 'email'}
-AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `django-phone-auth`
-    'django.contrib.auth.backends.ModelBackend',
 
-    # `django-phone-auth` specific authentication methods, such as login by phone/email/username.
-    'phone_auth.backend.CustomAuthBackend',
-]
 
 
 # Default primary key field type

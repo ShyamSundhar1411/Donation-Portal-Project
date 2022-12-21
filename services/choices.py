@@ -11,4 +11,5 @@ BLOOD_CHOICES=[
 ROLE_CHOICES = [
     ("Admin","Admin"),
     ("Donor","Donor"),
+    ("Unauthorized","Unauthorized")
 ]
