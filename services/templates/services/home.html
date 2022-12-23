@@ -7,6 +7,33 @@
     </form>
     {% for obj in filter.qs %}
         {{ obj.user }} - ${{ obj.contact }}<br />
+{% load static %}
+<div class = "container">
+    <hr/>
+    <div class = "row">
+    {% for donor in Donors.all %}
+        <div class="col-lg-3 col-md-4 col-sm-2">
+            <div class="custom-card border border-dark card p-3 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAnFJREFUWEftl+FRG0EMhZ8rCB2QVACpAFIBpAKggoQKgAqACoAKIBUAFQAVJOkgqQDmm1kZnby3u3c+z3gy0R+ffTrp3ZP0tJ5pzWy2Znj0zwHalfRN0n5i+k7SZbq23/9IepB0Jum5VpFlGDqUdFVLEO4fSbouPTMW0Iakn5L4HGKw9UkSn1kbC8iz81sSpcMuJO2l6x+SvqdrSraZrossjQV0KukkJaA3+G5mJQG0Wcm/w9RYQJ6hX5I+F8pAWZ8kfVwlQyQByIeUhOn5kgGF372k7eT3NwGbvIeIH6csgopgeGZlU2Z1j6DQoa/pJtfW4E1gcBrbQ74RI6hcU1eZsYBTACKWn6KoL8dJDvLCE36dChBhYeYgxL9JvdYEZqqS+WQe1GAwfYDQix2nG31vx+g+ZhamqTOqHY3xLy7YWDIeQDeG7Cj0iMnqS0QsVN2AApJVApusl44mRUAE3Wou+LsjQQFFIm+84G2F7c7qiYBeXTQcS0ZpOQeZWsMUm9wMOThvZHuOowSoZQJhAFYMlOkN/cMBzYyVQckoU5QIDnTzci4LiIRx0cKUHUe4z/EEJmmH2KMMhfddUGpfsgiWB5m+nPnjh79PQsDQY5SYrW8D85LAFJu6BKikxjmQvhS5rQ9bsNmxISVrBeT7xZLRZ8Yu92E7KxNDABGkU++e8tG4/s3jShl0hC2VrKIC2dtMD6NvVl20QxgaCigeS5p2WwlQ3+S0AGOy7NiK/8J49wWJgHzztSRu8fGjX/XPLVevvNUAFYeOCrcEy60HNAPK7W9LS5zow0sx1r3/LlpLNib5pM+0LNBJE9aC/QdUY+gNfYyCJSBuzKsAAAAASUVORK5CYII="/></div>
+                        <div class="ms-2 c-details">
+                            <h6 class="mb-0">Mailchimp</h6> <span>1 days ago</span>
+                        </div>
+                    </div>
+                    <div class="badge"> <span>Design</span> </div>
+                </div>
+                <div class="mt-5">
+                    <h3 class="heading">Senior Product<br>Designer-Singapore</h3>
+                    <div class="mt-5">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="mt-3"> <span class="text1">32 Applied <span class="text2">of 50 capacity</span></span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endfor %}
 
 
