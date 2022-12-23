@@ -16,7 +16,9 @@ def home(request):
         messages.info(
             request, "Verify your account by adding Contact Number before proceeding to the portal")
         return redirect("profile", slug=request.user.donor.slug)
-    return render(request, "services/home.html")
+    
+    donors = Donor.objects.all().order_by('-last_donated')    
+    return render(request, "services/home.html",{"Donors":donors})
 
 
 @login_required
