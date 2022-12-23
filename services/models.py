@@ -12,6 +12,7 @@ class Donor(models.Model):
     role = models.CharField(max_length = 100,choices = ROLE_CHOICES,default = "Donor")
     blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
     address = models.TextField(max_length=300)
+    date_of_birth= models.DateField(blank=True,null=True)
     last_donated = models.DateField(blank=True,null = True)
     contact = PhoneNumberField(blank=True)
     slug= models.SlugField(max_length=100,blank=True)
