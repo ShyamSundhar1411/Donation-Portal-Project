@@ -2,8 +2,15 @@
 {% block content %}
 {% load crispy_forms_tags %}
 <form method="get">
-        {{ filter.form }}
-        <input type="submit" />
+        <div class = "row">
+            <div class = "col">
+                {{filter.form.address|as_crispy_field}}
+            </div>
+            <div class = "col">
+                {{filter.form.blood_type|as_crispy_field}}
+            </div>
+        </div>
+        <button type="submit" class = "btn btn-primary">Filter</button>
     </form>
 
 {% load static %}

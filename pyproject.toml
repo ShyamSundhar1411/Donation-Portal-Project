@@ -12,6 +12,7 @@ django-crispy-forms = "^1.14.0"
 django-import-export = "^3.0.1"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "^7.0.1"}
 django-allauth = "^0.51.0"
+django-filter = "^22.1"
 
 [tool.poetry.dev-dependencies]
 Django = "^4.1.4"
