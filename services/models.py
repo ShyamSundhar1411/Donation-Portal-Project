@@ -22,7 +22,11 @@ class Donor(models.Model):
         super(Donor, self).save(*args, **kwargs)
     def __str__(self):
         return self.user.username
-    
+
+    def age(self):
+        import datetime
+        Age= (datetime.date.today() - self.date_of_birth)/365
+        return Age
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
