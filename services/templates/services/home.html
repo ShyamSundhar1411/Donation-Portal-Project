@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %} {% load crispy_forms_tags %}
+{% extends 'base.html' %} {% block content %} {% load crispy_forms_tags %}{% load age_calculator %}
 <form method="get">
   <div class="row">
     <div class="col">{{filter.form.address|as_crispy_field}}</div>
@@ -10,7 +10,8 @@
 <div class="container">
   <hr />
   <div class="row">
-    {% for obj in filter.qs %}
+    {% if filter.qs %}
+    {% for donor in filter.qs %}
     <div class="col-lg-3 col-md-4 col-sm-2">
       <div class="custom-card border border-dark card p-3 mb-2">
         <div class="d-flex justify-content-between">
@@ -21,20 +22,27 @@
               />
             </div>
             <div class="ms-2 c-details">
-              <h6 class="mb-0">{{ obj.user }}</h6>
-              <span>{{ obj.age.days }}</span> <span>years</span>
+              <h6 class="mb-0">{{ donor.user }}</h6>
+              {% if donor.date_of_birth %}
+              <span>{{ donor.date_of_birth|age }}</span> <span>years</span>
+              {% endif %}
             </div>
           </div>
-          <div class="badge"><span>{{ obj.blood_type }}</span></div>
+          <div class="badge"><span class = "badge bg-danger text-light">{{ donor.blood_type }}</span></div>
         </div>
         <div class="mt-5">
-        <p class="heading">{{ obj.address }}</p>
+          <p class="heading">{{ donor.address }}</p>
         </div>
-        <div>
-            <a href="https://wa.me/{{obj.contact|cut:' '}}" target="_blank"><i class="fa-brands fa-whatsapp"></i> Whatsapp</a>
+        <div class="d-inline-block">
+            <a  class = "btn btn-primary" href="https://wa.me/{{donor.contact|cut:' '}}" style = "margin-bottom:5px;" target="_blank"><i class="fa-brands fa-whatsapp"></i> Whatsapp</a>
+            <a  class = "btn btn-primary" href="mailto: {{donor.user.email}}" target="_blank" style = "margin-bottom:5px;"><i class="fa fa-envelope"></i> Mail</a>
         </div>
       </div>
     </div>
-    {% endfor %} {% endblock %}
+    {% endfor %}
+    {% else %}
+    <h3 class = "text-center">No Records Found !!!</h3> 
+    {% endif %}
   </div>
 </div>
+{% endblock %}

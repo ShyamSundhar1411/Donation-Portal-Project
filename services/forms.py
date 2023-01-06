@@ -8,7 +8,7 @@ class DonorForm(forms.ModelForm):
     contact= PhoneNumberField(required=True)
     class Meta:
         model=Donor
-        fields=['role','blood_type','address','last_donated','contact']
+        fields=['role','blood_type','address','last_donated','contact','date_of_birth']
 
 class UserForm(forms.ModelForm):
     email = forms.EmailField(required = True)
