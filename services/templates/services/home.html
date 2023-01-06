@@ -5,6 +5,10 @@
     <div class="col">{{filter.form.address|as_crispy_field}}</div>
     <div class="col">{{filter.form.blood_type|as_crispy_field}}</div>
   </div>
+  <div>
+    <input type="checkbox" id="show_compatible_types_check" name="show_compatible_types_check" unchecked>
+    <label for="show_compatible_types_check">Include Compatible Types</label>
+  </div>
   <button type="submit" class="btn btn-primary">Filter</button>
 </form>
 {% load static %}
