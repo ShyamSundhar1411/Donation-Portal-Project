@@ -13,7 +13,7 @@ class Donor(models.Model):
     blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
     address = models.TextField(max_length=300)
     date_of_birth= models.DateField(blank=True,null=True)
-    last_donated = models.DateField(blank=True,null = True)
+    compatible_types = models.CharField(max_length=500,null=True,choices=COMPATBILE_TYPES,blank=True)
     contact = PhoneNumberField(blank=True)
     slug= models.SlugField(max_length=100,blank=True)
     def save(self, *args, **kwargs):
@@ -23,10 +23,6 @@ class Donor(models.Model):
     def __str__(self):
         return self.user.username
 
-    def age(self):
-        import datetime
-        Age= (datetime.date.today() - self.date_of_birth)/365
-        return Age
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):

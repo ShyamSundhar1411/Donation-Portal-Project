@@ -30,6 +30,7 @@ def profile(request, slug):
         if user_form.is_valid() and donor_form.is_valid() :
             donor_form_copy = donor_form.save(commit=False)
             donor_form_copy.role='Donor'
+            donor_form_copy.compatible_types = donor_form.cleaned_data['blood_type']
             user_form.save()
             donor_form_copy.save()
             messages.success(request, 'Profile Updated Successfully')
