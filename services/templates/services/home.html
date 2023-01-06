@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% block content %} {% load crispy_forms_tags %}{% load age_calculator %}
+{% extends 'base.html' %} {% block content %} {% load crispy_forms_tags %}
+{% load custom_tags %}
 <form method="get">
   <div class="row">
     <div class="col">{{filter.form.address|as_crispy_field}}</div>
@@ -10,7 +11,7 @@
 <div class="container">
   <hr />
   <div class="row">
-    {% if filter.qs %}
+    {% if filter.qs %} 
     {% for donor in filter.qs %}
     <div class="col-lg-3 col-md-4 col-sm-2">
       <div class="custom-card border border-dark card p-3 mb-2">
@@ -28,20 +29,44 @@
               {% endif %}
             </div>
           </div>
-          <div class="badge"><span class = "badge bg-danger text-light">{{ donor.blood_type }}</span></div>
+          <div class="badge">
+            <span class="badge bg-danger text-light"
+              >{{ donor.blood_type }}</span
+            >
+          </div>
+        </div>
+        <div class="row" style = "margin-top:10px;">
+          <span class = "text-muted">Compatible Types</span>
+          {% with donor.compatible_types|split:"," as types %}
+          {% for type in types %}
+          <div class = "col" style = "margin:2px;"><span class = "badge bg-success">{{type}}</span></div>
+          {% endfor %}
+          {% endwith %}
         </div>
         <div class="mt-5">
-          <p class="heading">{{ donor.address }}</p>
+          <p>{{ donor.address }}</p>
         </div>
         <div class="d-inline-block">
-            <a  class = "btn btn-primary" href="https://wa.me/{{donor.contact|cut:' '}}" style = "margin-bottom:5px;" target="_blank"><i class="fa-brands fa-whatsapp"></i> Whatsapp</a>
-            <a  class = "btn btn-primary" href="mailto: {{donor.user.email}}" target="_blank" style = "margin-bottom:5px;"><i class="fa fa-envelope"></i> Mail</a>
+          <a
+            class="btn btn-primary"
+            href="https://wa.me/{{donor.contact|cut:' '}}"
+            style="margin-bottom: 5px"
+            target="_blank"
+            ><i class="fa-brands fa-whatsapp"></i> Whatsapp</a
+          >
+          <a
+            class="btn btn-primary"
+            href="mailto: {{donor.user.email}}"
+            target="_blank"
+            style="margin-bottom: 5px"
+            ><i class="fa fa-envelope"></i> Mail</a
+          >
         </div>
       </div>
     </div>
-    {% endfor %}
+    {% endfor %} 
     {% else %}
-    <h3 class = "text-center">No Records Found !!!</h3> 
+    <h3 class="text-center">No Records Found !!!</h3>
     {% endif %}
   </div>
 </div>
