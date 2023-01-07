@@ -164,7 +164,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'donationportal/static',
 ]
 LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'landing_page'
 
 ACCOUNT_RATE_LIMITS = {
     # Change password view (for users already logged in)
