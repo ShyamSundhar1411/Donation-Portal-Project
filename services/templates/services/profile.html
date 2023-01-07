@@ -72,4 +72,21 @@
             </div>
     </div>
 </div>
+<script>
+    function subtractYears(years,date = new Date()) {
+        // 👇 make copy with "Date" constructor
+        const dateCopy = date;
+        dateCopy.setFullYear(date.getFullYear() - years);
+      
+        return dateCopy;
+      }
+      
+    $(function () {
+        const maxDate = subtractYears(18);
+        $("#id_date_of_birth").datepicker({
+            format: 'yyyy-mm-dd',
+            endDate: maxDate,
+        });
+    });
+  </script>
 {% endblock %}

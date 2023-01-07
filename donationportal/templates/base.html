@@ -64,56 +64,42 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'assets/css/main.css' %}" rel="stylesheet" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
     <title>Donor Portal</title>
   </head>
   <body>
     <header id="header">
-      <div class="container">
-        <nav class="navbar navbar-light">
-          <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">Donation Portal</a>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarColor01"
-              aria-controls="navbarColor01"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarColor01">
-              <ul class="navbar-nav ms-auto">
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'profile' user.donor.slug %}"
-                    >Profile</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                </li>
-
-                {% else %}
-
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'account_signup' %}"
-                    >Signup</a
-                  >
-                </li>
-
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'account_login' %}">Login</a>
-                </li>
-
-                {% endif %}
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
+        <div class = "container">
+            <nav class="navbar navbar-expand-lg navbar-light" style = "box-shadow:none;">
+                <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'home' %}">Donation Portal</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav ms-auto">
+                    
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' user.donor.slug %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Signup</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Login</a>
+                        </li>
+                    {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+      
     </header>
     <div class="container">
       {% include 'messages.html' %} {% block content %} {% endblock %}
@@ -133,6 +119,7 @@
     <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
     <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
     <!-- Template Main JS File -->
     <script src="{% static 'assets/js/main.js' %}"></script>
   </body>

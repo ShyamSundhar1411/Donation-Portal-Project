@@ -16,9 +16,9 @@
         </div>
       </div>
       <h2>Welcome to <span>Donation Portal</span></h2>
-      <p>Et voluptate esse accusantium accusamus natus reiciendis quidem voluptates similique aut.</p>
+      <p>Donate blood, save lives. It's that simple</p>
       <div class="d-flex">
-        <a href="#about" class="btn-get-started scrollto">Get Started</a>
+        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-get-started scrollto">Get Started by Signing Up</a>
       </div>
     </div>
   </section>
@@ -33,33 +33,33 @@
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="zoom-out">
             <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-activity icon"></i></div>
-              <h4><a href="" class="stretched-link">Lorem Ipsum</a></h4>
-              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+              <div class="icon"><i class="fa-solid fa-heart-pulse"></i></div>
+              <h4><a href="" class="stretched-link">Donate Blood</a></h4>
+              <p>Donating blood saves lives! Your donation can be used to help someone in need of a blood transfusion</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="zoom-out" data-aos-delay="200">
             <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
-              <h4><a href="" class="stretched-link">Sed ut perspici</a></h4>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              <div class="icon"><i class="fa-solid fa-hand-holding-medical"></i></div>
+              <h4><a href="" class="stretched-link">Save Lives</a></h4>
+              <p>By saving someone's life, you are making a positive difference in the world and helping to improve the well-being of others</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="zoom-out" data-aos-delay="400">
             <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
-              <h4><a href="" class="stretched-link">Magni Dolores</a></h4>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+              <div class="icon"><i class="fa-solid fa-hand-holding-hand"></i></div>
+              <h4><a href="" class="stretched-link">We are there</a></h4>
+              <p>Get the support and help you need anytime, by using our donation portal</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="zoom-out" data-aos-delay="600">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-broadcast icon"></i></div>
-              <h4><a href="" class="stretched-link">Nemo Enim</a></h4>
-              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+              <h4><a href="" class="stretched-link">Connect</a></h4>
+              <p>Connect with others who share your commitment to saving lives through blood donation</p>
             </div>
           </div><!-- End Service Item -->
 
@@ -69,7 +69,7 @@
     </section><!-- End Featured Services Section -->
 
     <!-- ======= About Section ======= -->
-    <section id="about" class="about">
+    {% comment %} <section id="about" class="about">
       <div class="container" data-aos="fade-up">
 
         <div class="section-header">
@@ -177,7 +177,7 @@
         </div>
 
       </div>
-    </section><!-- End About Section -->
+    </section><!-- End About Section --> {% endcomment %}
 
     <!-- ======= Clients Section ======= -->
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

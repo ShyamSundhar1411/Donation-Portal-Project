@@ -9,10 +9,13 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import environ
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
 
+env = environ.Env()
+environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -42,11 +45,9 @@ INSTALLED_APPS = [
     'services',
     'crispy_bootstrap5',
     'crispy_forms',
+    'social_django',
     'import_export',
     "phonenumber_field",
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     'django_filters',
 ]
 
@@ -110,14 +111,33 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
+#Authentication
+AUTHENTICATION_BACKENDS = {
+    #Default Auth_Backend
     'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
+    #Social Account
+    'social_core.backends.google.GoogleOAuth2',
+}
+SOCIAL_AUTH_PIPELINE = [
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.mail.mail_validation',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
 ]
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env.str('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env.str('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'profile',
+    'email',
+]
+SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -166,18 +186,4 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = 'landing_page'
 
-ACCOUNT_RATE_LIMITS = {
-    # Change password view (for users already logged in)
-    "change_password": "5/m",
-    # Email management (e.g. add, remove, change primary)
-    "manage_email": "10/m",
-    # Request a password reset, global rate limit per IP
-    "reset_password": "20/m",
-    # Rate limit measured per individual email address
-    "reset_password_email": "5/m",
-    # Password reset (the view the password reset email links to).
-    "reset_password_from_key": "20/m",
-    # Signups.
-    "signup": "20/m",
-    # NOTE: Login is already protected via `ACCOUNT_LOGIN_ATTEMPTS_LIMIT`
-}
+
