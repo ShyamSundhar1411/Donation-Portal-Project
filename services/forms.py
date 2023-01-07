@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class DonorForm(forms.ModelForm):
     role = forms.CharField(disabled=True)
     contact = PhoneNumberField(required=True)
+    date_of_birth = forms.DateField(required=True)
     class Meta:
         model=Donor
         fields=['role','blood_type','address','contact','date_of_birth']
