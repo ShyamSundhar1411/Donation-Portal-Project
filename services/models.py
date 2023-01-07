@@ -13,7 +13,7 @@ class Donor(models.Model):
     blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
     address = models.TextField(max_length=300)
     date_of_birth= models.DateField(blank=True,null=True)
-    compatible_types = models.CharField(max_length=500,null=True,choices=COMPATBILE_TYPES,blank=True)
+    compatible_types = models.CharField(max_length=500,null=True,choices=COMPATIBLE_TYPES,blank=True)
     contact = PhoneNumberField(blank=True)
     slug= models.SlugField(max_length=100,blank=True)
     def save(self, *args, **kwargs):

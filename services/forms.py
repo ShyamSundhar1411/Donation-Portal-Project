@@ -7,10 +7,9 @@ from django.contrib.auth.models import User
 class DonorForm(forms.ModelForm):
     role= forms.CharField(disabled=True)
     contact= PhoneNumberField(required=True)
-    compatible_types = forms.ChoiceField(disabled=True,required=False,choices = COMPATBILE_TYPES)
     class Meta:
         model=Donor
-        fields=['role','blood_type','address','contact','date_of_birth','compatible_types']
+        fields=['role','blood_type','address','contact','date_of_birth']
 
 class UserForm(forms.ModelForm):
     email = forms.EmailField(required = True)

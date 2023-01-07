@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from .models import Donor
 from django.contrib import messages
 from .filters import DonorFilter
+from .aiding_functions import find_compatible_match
 # Create your views here.
 
 
@@ -18,7 +19,14 @@ def home(request):
             request, "Verify your account by adding Contact Number before proceeding to the portal")
         return redirect("profile", slug=request.user.donor.slug)
     filter = DonorFilter(request.GET, queryset=Donor.objects.all()) 
-    return render(request, "services/home.html", {'filter': filter})
+    checker = request.GET.get("show_compatible_types_check","")
+    records = filter.qs
+    if checker=="on":
+        blood_type = request.GET.get("blood_type","")
+        print(checker)
+        extra_data = Donor.objects.filter(compatible_types__icontains = blood_type)
+        records = (records | extra_data)
+    return render(request, "services/home.html", {'filter': filter,"records":records})
 
 
 @login_required
@@ -30,7 +38,7 @@ def profile(request, slug):
         if user_form.is_valid() and donor_form.is_valid() :
             donor_form_copy = donor_form.save(commit=False)
             donor_form_copy.role='Donor'
-            donor_form_copy.compatible_types = donor_form.cleaned_data['blood_type']
+            donor_form_copy.compatible_types = find_compatible_match(donor_form.cleaned_data['blood_type'])
             user_form.save()
             donor_form_copy.save()
             messages.success(request, 'Profile Updated Successfully')
