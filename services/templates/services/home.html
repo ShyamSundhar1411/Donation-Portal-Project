@@ -41,18 +41,18 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <ol class="widget-49-meeting-points">
                       <div  style="margin-top: 10px; margin-bottom: 10px">
-                        <div class="accordion accordion-borderless" id="accordionFlushExampleX{{donor.user}}">
+                        <div class="accordion accordion-borderless" id="accordionFlushExampleX">
                         <div class="accordion-item">
-                          <h2 class="accordion-header" id="flush-headingOneX{{donor.user}}">
+                          <h2 class="accordion-header" id="flush-headingOneX">
                             <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
                               data-mdb-target="#{{donor.user}}" aria-expanded="true" aria-controls="{{donor.user}}">
                               Compatible Types
                             </button>
                           </h2>
                           <div id="{{donor.user}}" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingOneX{{donor.user}}" data-mdb-parent="#accordionFlushExampleX{{donor.user}}">
+                            aria-labelledby="flush-headingOneX" data-mdb-parent="#accordionFlushExampleX">
                             <div class="accordion-body">
                                 {% with donor.compatible_types|split:"," as types %}
                                 {% for type in types %}
@@ -65,14 +65,14 @@
                           </div>
                         </div>
                         <div class="accordion-item">
-                          <h2 class="accordion-header" id="flush-headingTwoX{{donor.user}}1">
+                          <h2 class="accordion-header" id="flush-headingTwoX">
                             <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
                               data-mdb-target="#{{donor.user}}1" aria-expanded="false" aria-controls="{{donor.user}}1">
                                 Address
                             </button>
                           </h2>
-                          <div id="{{donor.user}}1" class="accordion-collapse collapse" aria-labelledby="flush-headingTwoX{{donor.user}}1"
-                            data-mdb-parent="#accordionFlushExampleX{{donor.user}}">
+                          <div id="{{donor.user}}1" class="accordion-collapse collapse" aria-labelledby="flush-headingTwoX"
+                            data-mdb-parent="#accordionFlushExampleX">
                             <div class="accordion-body">
                               {{ donor.address }}                
                             </div>
@@ -80,6 +80,7 @@
                         </div>
                         </div>
                       </div>
+                    </ol>
                     <div class="d-inline-block">
                       <a
                         class="btn btn-primary"
