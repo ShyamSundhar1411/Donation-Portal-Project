@@ -18,9 +18,15 @@
                     <p class = "card-text profile-text">Email : {{user.email|truncatechars:20}}</p>
                     <p class = "card-text profile-text">First Name : {{user.first_name}}</p>
                     <p class = "card-text profile-text">Last Name : {{user.last_name}}</p>
+                    {% if user.donor.blood_type %}
                     <p class = "card-text profile-text">Blood Type : {{user.donor.blood_type}}</p>
-                    <p class = "card-text profile-text">Address : {{user.donor.address|truncatechars:30}}</p>
-                    <p class = "card-text profile-text">Last Donated : {{user.donor.last_donated |date:"d M Y"}}</p>
+                    {% endif %}
+                    {% if user.donor.address != ' ' %}
+                        <p class = "card-text profile-text">Address : {{user.donor.address|truncatechars:30}}</p>
+                    {% endif %}
+                    {% if user.donor.date_of_birth %}
+                    <p class = "card-text profile-text">Date of Birth : {{user.donor.date_of_birth |date:"d M Y"}}</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-8 col-sm-7">

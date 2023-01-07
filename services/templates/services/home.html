@@ -9,7 +9,9 @@
     <input type="checkbox" id="show_compatible_types_check" name="show_compatible_types_check" unchecked>
     <label for="show_compatible_types_check">Include Compatible Types</label>
   </div>
+  <div class = "d-inline-block py-2" style = "margin-top:3px;margin-bottom:5px;">
   <button type="submit" class="btn btn-primary">Filter</button>
+  </div>
 </form>
 {% load static %}
 <div class="container">
@@ -28,7 +30,7 @@
                         </div>
                         <div class="widget-49-meeting-info">
                             <span class="widget-49-pro-title">{{donor.user.username}}</span>
-                            <div class = "row">
+                            <div class = "row-flex">
                       
                             {% if donor.date_of_birth %}
                               <div class = "col">
@@ -43,16 +45,16 @@
                     </div>
                     
                       <div  style="margin-top: 10px; margin-bottom: 10px">
-                        <div class="accordion accordion-borderless" id="accordionFlushExampleX{{donor.user}}">
+                        <div class="accordion accordion-borderless" id="accordionFlushExampleX{{donor.slug}}">
                         <div class="accordion-item">
-                          <h2 class="accordion-header" id="flush-headingOneX{{donor.user}}">
+                          <h2 class="accordion-header" id="flush-headingOneX{{donor.slug}}">
                             <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
-                              data-mdb-target="#{{donor.user}}" aria-expanded="true" aria-controls="{{donor.user}}">
+                              data-mdb-target="#abc{{donor.slug}}" aria-expanded="true" aria-controls="abc{{donor.slug}}">
                               Compatible Types
                             </button>
                           </h2>
-                          <div id="{{donor.user}}" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingOneX{{donor.user}}" data-mdb-parent="#accordionFlushExampleX{{donor.user}}">
+                          <div id="abc{{donor.slug}}" class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingOneX{{donor.slug}}" data-mdb-parent="#accordionFlushExampleX{{donor.slug}}">
                             <div class="accordion-body">
                                 {% with donor.compatible_types|split:"," as types %}
                                 {% for type in types %}
@@ -65,14 +67,14 @@
                           </div>
                         </div>
                         <div class="accordion-item">
-                          <h2 class="accordion-header" id="flush-headingTwoX{{donor.user}}1">
+                          <h2 class="accordion-header" id="flush-headingTwoX{{donor.slug}}1">
                             <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
-                              data-mdb-target="#{{donor.user}}1" aria-expanded="false" aria-controls="{{donor.user}}1">
+                              data-mdb-target="#abcd{{donor.slug}}1" aria-expanded="false" aria-controls="abcd{{donor.slug}}1">
                                 Address
                             </button>
                           </h2>
-                          <div id="{{donor.user}}1" class="accordion-collapse collapse" aria-labelledby="flush-headingTwoX{{donor.user}}1"
-                            data-mdb-parent="#accordionFlushExampleX{{donor.user}}">
+                          <div id="abcd{{donor.slug}}1" class="accordion-collapse collapse" aria-labelledby="flush-headingTwoX{{donor.slug}}1"
+                            data-mdb-parent="#accordionFlushExampleX{{donor.slug}}">
                             <div class="accordion-body">
                               {{ donor.address }}                
                             </div>
