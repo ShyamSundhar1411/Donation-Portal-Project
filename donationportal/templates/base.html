@@ -28,9 +28,8 @@
     <title>Donor Portal</title>
   </head>
   <body>
-    <div class = "container">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
+        <nav class="navbar navbar-dark bg-primary">
+            <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">Donation Portal</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -58,7 +57,6 @@
             </div>
             </div>
         </nav>
-    </div>
     <div class = "container">
         {% include 'messages.html' %}
         {% block content %}
