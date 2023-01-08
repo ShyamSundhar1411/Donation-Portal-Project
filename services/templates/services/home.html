@@ -40,6 +40,11 @@
                             <div class = "col">
                               <span class="widget-49-meeting-time"><span class="badge rounded-pill bg-danger">{{ donor.blood_type }}</span></span>
                             </div>
+                            {% if user.donor.role == 'Admin'%}
+                              <div class = "col">
+                                <span class="widget-49-meeting-time">{{ donor.contact }}</span>
+                              </div>
+                            {% endif %}
                             </div>
                         </div>
                     </div>
@@ -66,6 +71,7 @@
                             </div>
                           </div>
                         </div>
+                        {% if user.donor.role == "Admin" %}
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="flush-headingTwoX{{donor.slug}}1">
                             <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
@@ -80,9 +86,11 @@
                             </div>
                           </div>
                         </div>
+                        {% endif %}
                         </div>
                       </div>
                     </ol>
+                    {% if user.donor.role == "Admin" %}
                     <div class="d-inline-block">
                       <a
                         class="btn btn-primary"
@@ -98,6 +106,8 @@
                         ><i class="fa fa-envelope"></i> Mail</a
                       >
                     </div>
+                    {% endif %}
+                    
                 </div>
             </div>
         </div>
