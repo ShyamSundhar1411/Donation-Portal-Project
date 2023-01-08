@@ -2,6 +2,7 @@
 <html lang="en">
   {% load static %}
   <head>
+    <link rel='shortcut icon' type='image/x-icon' href="{% static 'favicon.ico' %}" />
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -72,7 +73,8 @@
         <div class = "container">
             <nav class="navbar navbar-expand-lg navbar-light" style = "box-shadow:none;">
                 <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}">Blood Bank</a>
+                <a class="navbar-brand" href="{% url 'home' %}">
+                  <img src="{% static 'blood-bank-logo.png' %}" alt="" width="30" height="24">Blood Bank</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

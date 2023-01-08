@@ -15,7 +15,7 @@ from .aiding_functions import find_compatible_match
 def landing_page(request):
     if request.user.is_authenticated:
         return redirect("home")
-    return render(request,"services/landing_page.html")
+    return render(request,"services/landing_page.html",{'donors':Donor.objects.all()})
 
 @login_required
 def home(request):

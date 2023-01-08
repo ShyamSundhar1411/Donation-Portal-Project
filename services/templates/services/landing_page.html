@@ -17,6 +17,7 @@
       </div>
       <h2>Welcome to <span>Donation Portal</span></h2>
       <p>Donate blood, save lives. It's that simple</p>
+      <p class="text-center ">We have currently {{ donors.count }} Donor{{ donors.count|pluralize }}</p>
       <div class="d-flex">
         <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-get-started scrollto">Get Started by Signing Up</a>
       </div>
