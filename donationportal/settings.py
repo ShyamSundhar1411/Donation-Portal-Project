@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vw21b07sgy=(2)dj3u3kp6(e671sh^gwl^zr99k3lq#+vlgd)y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -88,8 +88,12 @@ WSGI_APPLICATION = 'donationportal.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE':'django.db.backends.postgresql_psycopg2',
+        'NAME':os.getenv('DB_NAME'),
+        'USER':os.getenv('DB_USER'),
+        'PASSWORD':os.getenv('DB_PASSWORD'),
+        'HOST':os.getenv('DB_HOST'),
+        'PORT':'5432',
     }
 }
 
@@ -183,6 +187,11 @@ MESSAGE_TAGS = {
 
 STATICFILES_DIRS = [
     BASE_DIR / 'donationportal/static',
+]
+
+#Storages
+CSRF_TRUSTED_ORIGINS = [
+    'https://bloodbankvitc.azurewebsites.net'
 ]
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = 'landing_page'
