@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'import_export',
     "phonenumber_field",
     'django_filters',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -185,5 +186,13 @@ STATICFILES_DIRS = [
 ]
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = 'landing_page'
+DEFAULT_FILE_STORAGE = 'services.custom_azure.AzureMediaStorage'
+STATICFILES_STORAGE = 'services.custom_azure.AzureStaticStorage'
+STATIC_LOCATION = "static"
+MEDIA_LOCATION = "media"
+AZURE_ACCOUNT_NAME = env.str("ACCOUNT_NAME")
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
 
 
