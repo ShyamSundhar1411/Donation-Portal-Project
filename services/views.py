@@ -23,7 +23,7 @@ def home(request):
         messages.info(
             request, "Verify your account by adding Contact Number before proceeding to the portal")
         return redirect("profile", slug=request.user.donor.slug)
-    filter = DonorFilter(request.GET, queryset=Donor.objects.all()) 
+    filter = DonorFilter(request.GET, queryset=Donor.objects.filter(role = "Donor",user__is_superuser = False)) 
     checker = request.GET.get("show_compatible_types_check","")
     records = filter.qs
     if checker=="on":
