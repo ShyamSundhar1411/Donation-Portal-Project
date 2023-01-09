@@ -89,8 +89,7 @@
                       data-mdb-parent="#accordionFlushExampleX{{donor.slug}}"
                     >
                       <div class="accordion-body">
-                        {% with donor.compatible_types|split:"," as types %} {%
-                        for type in types %}
+                        {% with donor.compatible_types|split:"," as types %} {% for type in types %}
                         <div class="d-inline-block" style="margin-bottom: 5px">
                           <span class="badge bg-success">{{type}}</span>
                         </div>
@@ -128,14 +127,16 @@
                 </div>
               </div>
             </ol>
-            {% if user.donor.role == "Admin" %}
+            
             <div class="d-inline-block">
+              {% if user.donor.role == "Admin" %}
               <a
                 class="btn btn-primary"
                 href="https://wa.me/{{donor.contact|cut:' '}}"
                 style="margin-bottom: 5px"
                 target="_blank"
                 ><i class="fa-brands fa-whatsapp"></i> Whatsapp</a
+                
               >
               {% endif %}
               <a
