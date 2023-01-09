@@ -42,7 +42,8 @@ def profile(request, slug):
             request.POST, request.FILES, instance=request.user.donor)
         if user_form.is_valid() and donor_form.is_valid() :
             donor_form_copy = donor_form.save(commit=False)
-            donor_form_copy.role='Donor'
+            if request.user.donor.role == "Unauthorized":
+                donor_form_copy.role='Donor'
             donor_form_copy.compatible_types = find_compatible_match(donor_form.cleaned_data['blood_type'])
             user_form.save()
             donor_form_copy.save()
