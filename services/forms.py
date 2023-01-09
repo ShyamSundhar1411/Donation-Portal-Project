@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 class DonorForm(forms.ModelForm):
     role = forms.CharField(disabled=True)
-    contact = PhoneNumberField(required=True)
+    contact = PhoneNumberField(required=True,help_text = "Indicate the country code in front of the number if it's not an Indian number.")
     date_of_birth = forms.DateField(required=True)
     class Meta:
         model=Donor
