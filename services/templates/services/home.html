@@ -1,119 +1,157 @@
-{% extends 'base.html' %} {% block content %} {% load crispy_forms_tags %}
-{% load custom_tags %}
+{% extends 'base.html' %} {% block content %} {% load crispy_forms_tags %} {%
+load custom_tags %}
 <form method="get">
   <div class="row">
     <div class="col">{{filter.form.address|as_crispy_field}}</div>
     <div class="col">{{filter.form.blood_type|as_crispy_field}}</div>
   </div>
   <div>
-    <input type="checkbox" id="show_compatible_types_check" name="show_compatible_types_check" unchecked>
+    <input
+      type="checkbox"
+      id="show_compatible_types_check"
+      name="show_compatible_types_check"
+      unchecked
+    />
     <label for="show_compatible_types_check">Include Compatible Types</label>
   </div>
-  <div class = "d-inline-block py-2" style = "margin-top:3px;margin-bottom:5px;">
-  <button type="submit" class="btn btn-primary">Filter</button>
+  <div class="d-inline-block py-2" style="margin-top: 3px; margin-bottom: 5px">
+    <button type="submit" class="btn btn-primary">Filter</button>
   </div>
 </form>
 {% load static %}
 <div class="container">
   <hr />
   <div class="row">
-    {% if records %} 
-    {% for donor in records %}
+    {% if records %} {% for donor in records %}
     <div class="col-lg-4 col-md-6">
-        <div class="card card-margin border border-dark">
-            <div class="card-body pt-4">
-                <div class="widget-49">
-                    <div class="widget-49-title-wrapper">
-                        <div class="widget-49-date-primary">
-                            <span class="widget-49-date-day"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAnFJREFUWEftl+FRG0EMhZ8rCB2QVACpAFIBpAKggoQKgAqACoAKIBUAFQAVJOkgqQDmm1kZnby3u3c+z3gy0R+ffTrp3ZP0tJ5pzWy2Znj0zwHalfRN0n5i+k7SZbq23/9IepB0Jum5VpFlGDqUdFVLEO4fSbouPTMW0Iakn5L4HGKw9UkSn1kbC8iz81sSpcMuJO2l6x+SvqdrSraZrossjQV0KukkJaA3+G5mJQG0Wcm/w9RYQJ6hX5I+F8pAWZ8kfVwlQyQByIeUhOn5kgGF372k7eT3NwGbvIeIH6csgopgeGZlU2Z1j6DQoa/pJtfW4E1gcBrbQ74RI6hcU1eZsYBTACKWn6KoL8dJDvLCE36dChBhYeYgxL9JvdYEZqqS+WQe1GAwfYDQix2nG31vx+g+ZhamqTOqHY3xLy7YWDIeQDeG7Cj0iMnqS0QsVN2AApJVApusl44mRUAE3Wou+LsjQQFFIm+84G2F7c7qiYBeXTQcS0ZpOQeZWsMUm9wMOThvZHuOowSoZQJhAFYMlOkN/cMBzYyVQckoU5QIDnTzci4LiIRx0cKUHUe4z/EEJmmH2KMMhfddUGpfsgiWB5m+nPnjh79PQsDQY5SYrW8D85LAFJu6BKikxjmQvhS5rQ9bsNmxISVrBeT7xZLRZ8Yu92E7KxNDABGkU++e8tG4/s3jShl0hC2VrKIC2dtMD6NvVl20QxgaCigeS5p2WwlQ3+S0AGOy7NiK/8J49wWJgHzztSRu8fGjX/XPLVevvNUAFYeOCrcEy60HNAPK7W9LS5zow0sx1r3/LlpLNib5pM+0LNBJE9aC/QdUY+gNfYyCJSBuzKsAAAAASUVORK5CYII="/></span>
-                            
-                        </div>
-                        <div class="widget-49-meeting-info">
-                            <span class="widget-49-pro-title">{{donor.user.username}}</span>
-                            <div class = "row-flex">
-                      
-                            {% if donor.date_of_birth %}
-                              <div class = "col">
-                              <span class="widget-49-meeting-time">{{ donor.date_of_birth|age }} years</span>
-                              </div>
-                            {% endif %}
-                            <div class = "col">
-                              <span class="widget-49-meeting-time"><span class="badge rounded-pill bg-danger">{{ donor.blood_type }}</span></span>
-                            </div>
-                            {% if user.donor.role == 'Admin'%}
-                              <div class = "col">
-                                <span class="widget-49-meeting-time">{{ donor.contact }}</span>
-                              </div>
-                            {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <ol class="widget-49-meeting-points">
-                      <div  style="margin-top: 10px; margin-bottom: 10px">
-                        <div class="accordion accordion-borderless" id="accordionFlushExampleX{{donor.slug}}">
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="flush-headingOneX{{donor.slug}}">
-                            <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
-                              data-mdb-target="#abc{{donor.slug}}" aria-expanded="true" aria-controls="abc{{donor.slug}}">
-                              Compatible Types
-                            </button>
-                          </h2>
-                          <div id="abc{{donor.slug}}" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingOneX{{donor.slug}}" data-mdb-parent="#accordionFlushExampleX{{donor.slug}}">
-                            <div class="accordion-body">
-                                {% with donor.compatible_types|split:"," as types %}
-                                {% for type in types %}
-                                <div class="d-inline-block" style="margin-bottom: 5px">
-                                  <span class = "badge bg-success">{{type}}</span>
-                                </div>
-                                {% endfor %}
-                                {% endwith %}
-                            </div>
-                          </div>
-                        </div>
-                        {% if user.donor.role == "Admin" %}
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="flush-headingTwoX{{donor.slug}}1">
-                            <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
-                              data-mdb-target="#abcd{{donor.slug}}1" aria-expanded="false" aria-controls="abcd{{donor.slug}}1">
-                                Address
-                            </button>
-                          </h2>
-                          <div id="abcd{{donor.slug}}1" class="accordion-collapse collapse" aria-labelledby="flush-headingTwoX{{donor.slug}}1"
-                            data-mdb-parent="#accordionFlushExampleX{{donor.slug}}">
-                            <div class="accordion-body">
-                              {{ donor.address }}                
-                            </div>
-                          </div>
-                        </div>
-                        {% endif %}
-                        </div>
-                      </div>
-                    </ol>
-                    {% if user.donor.role == "Admin" %}
-                    <div class="d-inline-block">
-                      <a
-                        class="btn btn-primary"
-                        href="https://wa.me/{{donor.contact|cut:' '}}"
-                        style="margin-bottom: 5px"
-                        target="_blank"
-                        ><i class="fa-brands fa-whatsapp"></i> Whatsapp</a>
-                      <a
-                        class="btn btn-primary"
-                        href="mailto: {{donor.user.email}}"
-                        target="_blank"
-                        style="margin-bottom: 5px"
-                        ><i class="fa fa-envelope"></i> Mail</a
-                      >
-                    </div>
-                    {% endif %}
-                    
+      <div class="card card-margin border border-dark">
+        <div class="card-body pt-4">
+          <div class="widget-49">
+            <div class="widget-49-title-wrapper">
+              <div class="widget-49-date-primary">
+                <span class="widget-49-date-day"
+                  ><img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAnFJREFUWEftl+FRG0EMhZ8rCB2QVACpAFIBpAKggoQKgAqACoAKIBUAFQAVJOkgqQDmm1kZnby3u3c+z3gy0R+ffTrp3ZP0tJ5pzWy2Znj0zwHalfRN0n5i+k7SZbq23/9IepB0Jum5VpFlGDqUdFVLEO4fSbouPTMW0Iakn5L4HGKw9UkSn1kbC8iz81sSpcMuJO2l6x+SvqdrSraZrossjQV0KukkJaA3+G5mJQG0Wcm/w9RYQJ6hX5I+F8pAWZ8kfVwlQyQByIeUhOn5kgGF372k7eT3NwGbvIeIH6csgopgeGZlU2Z1j6DQoa/pJtfW4E1gcBrbQ74RI6hcU1eZsYBTACKWn6KoL8dJDvLCE36dChBhYeYgxL9JvdYEZqqS+WQe1GAwfYDQix2nG31vx+g+ZhamqTOqHY3xLy7YWDIeQDeG7Cj0iMnqS0QsVN2AApJVApusl44mRUAE3Wou+LsjQQFFIm+84G2F7c7qiYBeXTQcS0ZpOQeZWsMUm9wMOThvZHuOowSoZQJhAFYMlOkN/cMBzYyVQckoU5QIDnTzci4LiIRx0cKUHUe4z/EEJmmH2KMMhfddUGpfsgiWB5m+nPnjh79PQsDQY5SYrW8D85LAFJu6BKikxjmQvhS5rQ9bsNmxISVrBeT7xZLRZ8Yu92E7KxNDABGkU++e8tG4/s3jShl0hC2VrKIC2dtMD6NvVl20QxgaCigeS5p2WwlQ3+S0AGOy7NiK/8J49wWJgHzztSRu8fGjX/XPLVevvNUAFYeOCrcEy60HNAPK7W9LS5zow0sx1r3/LlpLNib5pM+0LNBJE9aC/QdUY+gNfYyCJSBuzKsAAAAASUVORK5CYII="
+                /></span>
+              </div>
+              <div class="widget-49-meeting-info">
+                <span class="widget-49-pro-title">{{donor.user.username}}</span>
+                <div class="row-flex">
+                  {% if donor.date_of_birth %}
+                  <div class="col">
+                    <span class="widget-49-meeting-time"
+                      >{{ donor.date_of_birth|age }} years</span
+                    >
+                  </div>
+                  {% endif %}
+                  <div class="col">
+                    <span class="widget-49-meeting-time"
+                      ><span class="badge rounded-pill bg-danger"
+                        >{{ donor.blood_type }}</span
+                      ></span
+                    >
+                  </div>
+                  {% if user.donor.role == 'Admin'%}
+                  <div class="col">
+                    <span class="widget-49-meeting-time"
+                      >{{ donor.contact }}</span
+                    >
+                  </div>
+                  {% endif %}
                 </div>
+              </div>
             </div>
+            <ol class="widget-49-meeting-points">
+              <div style="margin-top: 10px; margin-bottom: 10px">
+                <div
+                  class="accordion accordion-borderless"
+                  id="accordionFlushExampleX{{donor.slug}}"
+                >
+                  <div class="accordion-item">
+                    <h2
+                      class="accordion-header"
+                      id="flush-headingOneX{{donor.slug}}"
+                    >
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#abc{{donor.slug}}"
+                        aria-expanded="true"
+                        aria-controls="abc{{donor.slug}}"
+                      >
+                        Compatible Types
+                      </button>
+                    </h2>
+                    <div
+                      id="abc{{donor.slug}}"
+                      class="accordion-collapse collapse"
+                      aria-labelledby="flush-headingOneX{{donor.slug}}"
+                      data-mdb-parent="#accordionFlushExampleX{{donor.slug}}"
+                    >
+                      <div class="accordion-body">
+                        {% with donor.compatible_types|split:"," as types %} {%
+                        for type in types %}
+                        <div class="d-inline-block" style="margin-bottom: 5px">
+                          <span class="badge bg-success">{{type}}</span>
+                        </div>
+                        {% endfor %} {% endwith %}
+                      </div>
+                    </div>
+                  </div>
+                  {% if user.donor.role == "Admin" %}
+                  <div class="accordion-item">
+                    <h2
+                      class="accordion-header"
+                      id="flush-headingTwoX{{donor.slug}}1"
+                    >
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#abcd{{donor.slug}}1"
+                        aria-expanded="false"
+                        aria-controls="abcd{{donor.slug}}1"
+                      >
+                        Address
+                      </button>
+                    </h2>
+                    <div
+                      id="abcd{{donor.slug}}1"
+                      class="accordion-collapse collapse"
+                      aria-labelledby="flush-headingTwoX{{donor.slug}}1"
+                      data-mdb-parent="#accordionFlushExampleX{{donor.slug}}"
+                    >
+                      <div class="accordion-body">{{ donor.address }}</div>
+                    </div>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </ol>
+            {% if user.donor.role == "Admin" %}
+            <div class="d-inline-block">
+              <a
+                class="btn btn-primary"
+                href="https://wa.me/{{donor.contact|cut:' '}}"
+                style="margin-bottom: 5px"
+                target="_blank"
+                ><i class="fa-brands fa-whatsapp"></i> Whatsapp</a
+              >
+              {% endif %}
+              <a
+                class="btn btn-primary"
+                href="mailto: {{donor.user.email}}"
+                target="_blank"
+                style="margin-bottom: 5px"
+                ><i class="fa fa-envelope"></i> Mail</a
+              >
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    {% endfor %} 
-    {% else %}
+    {% endfor %} {% else %}
     <h3 class="text-center">No Records Found !!!</h3>
     {% endif %}
   </div>
