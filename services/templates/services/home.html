@@ -1,5 +1,4 @@
-{% extends 'base.html' %} {% block content %} {% load crispy_forms_tags %} {%
-load custom_tags %}
+{% extends 'base.html' %} {% block content %} {% load crispy_forms_tags %} {% load custom_tags %}
 <form method="get">
   <div class="row">
     <div class="col">{{filter.form.address|as_crispy_field}}</div>
