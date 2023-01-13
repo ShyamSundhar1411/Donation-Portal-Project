@@ -28,7 +28,9 @@ def home(request):
     records = filter.qs
     if checker=="on":
         blood_type = request.GET.get("blood_type","")
-        print(checker)
+        if blood_type == "B +ve" or blood_type == "B -ve":
+            print("Hey B +ve")
+            blood_type = ";"+blood_type
         extra_data = Donor.objects.filter(compatible_types__icontains = blood_type)
         records = (records | extra_data)
     return render(request, "services/home.html", {'filter': filter,"records":records})
