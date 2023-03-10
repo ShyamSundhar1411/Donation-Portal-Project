@@ -1,7 +1,8 @@
 {% extends 'base.html' %} {% block content %} {% load crispy_forms_tags %} {% load custom_tags %}
 <form method="get">
   <div class="row">
-    <div class="col">{{filter.form.address|as_crispy_field}}</div>
+    <div class="col">{{filter.form.state|as_crispy_field}}</div>
+    <div class="col">{{filter.form.pin_code|as_crispy_field}}</div>
     <div class="col">{{filter.form.blood_type|as_crispy_field}}</div>
   </div>
   <div>
@@ -120,7 +121,7 @@
                       aria-labelledby="flush-headingTwoX{{donor.slug}}1"
                       data-mdb-parent="#accordionFlushExampleX{{donor.slug}}"
                     >
-                      <div class="accordion-body">{{ donor.address }}</div>
+                      <div class="accordion-body">{{ donor.display_address }}</div>
                     </div>
                   </div>
                   {% endif %}

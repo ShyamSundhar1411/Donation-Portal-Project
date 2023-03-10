@@ -21,8 +21,8 @@
                     {% if user.donor.blood_type %}
                     <p class = "card-text profile-text">Blood Type : {{user.donor.blood_type}}</p>
                     {% endif %}
-                    {% if user.donor.address != ' ' %}
-                        <p class = "card-text profile-text">Address : {{user.donor.address|truncatechars:30}}</p>
+                    {% if user.donor.house_no != ' ' %}
+                        <p class = "card-text profile-text">Address : {{user.donor.display_address|truncatechars:30}}</p>
                     {% endif %}
                     {% if user.donor.date_of_birth %}
                     <p class = "card-text profile-text">Date of Birth : {{user.donor.date_of_birth |date:"d M Y"}}</p>
@@ -67,7 +67,13 @@
                         </div>
                         <div class="row form-row">
                             <div class = "col">
-                                {{donor_form.address|as_crispy_field}}
+                                {{donor_form.house_no|as_crispy_field}}
+                            </div>
+                            <div class = "col">
+                                {{donor_form.state|as_crispy_field}}
+                            </div>
+                            <div class = "col">
+                                {{donor_form.pin_code|as_crispy_field}}
                             </div>
                         </div>
                         <div class = "d-inline-block py-3">

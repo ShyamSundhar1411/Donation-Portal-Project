@@ -10,7 +10,7 @@ class DonorForm(forms.ModelForm):
     date_of_birth = forms.DateField(required=True)
     class Meta:
         model=Donor
-        fields=['role','blood_type','address','contact','date_of_birth']
+        fields=['role','blood_type','house_no','state','pin_code','contact','date_of_birth']
 
 class UserForm(forms.ModelForm):
     email = forms.EmailField(required = True)
