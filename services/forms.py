@@ -18,4 +18,7 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username','email','first_name','last_name']
 
-
+class DonorRequestForm(forms.ModelForm):
+    class Meta:
+        model = DonorRequest
+        fields = ['location','blood_type']

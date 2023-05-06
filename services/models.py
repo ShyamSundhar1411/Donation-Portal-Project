@@ -32,6 +32,17 @@ class Donor(models.Model):
         """.format(self.house_no,self.state,self.pin_code)
         return my_address
 
+class DonorRequest(models.Model):
+    donor=models.ForeignKey(Donor,on_delete=models.CASCADE)
+    date=models.DateTimeField(auto_now=True)
+    location=models.CharField(max_length=300,help_text="Hospital Location")
+    blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
+
+class DonorApproval(models.Model):
+    donor_request=models.ForeignKey(DonorRequest,on_delete=models.CASCADE)
+    Donation_status=models.CharField(max_length = 100,choices = APPROVAL_STATUS,default = "Pending")
+    date_approved = models.DateTimeField(auto_now_add=True)
+
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
