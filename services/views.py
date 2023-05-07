@@ -40,8 +40,7 @@ def home(request):
 def profile(request, slug):
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
-        donor_form = DonorForm(
-            request.POST, request.FILES, instance=request.user.donor)
+        donor_form = DonorForm(request.POST, request.FILES, instance=request.user.donor)
         if user_form.is_valid() and donor_form.is_valid() :
             donor_form_copy = donor_form.save(commit=False)
             if request.user.donor.role == "Unauthorized":
@@ -59,3 +58,18 @@ def profile(request, slug):
         donor_form = DonorForm(instance=request.user.donor)
         return render(request, 'services/profile.html', {'user_form': user_form, 'donor_form': donor_form})
 
+@login_required
+def request(request,slug):
+    if request.method == 'POST':
+        donor_request_form = DonorRequestForm(request.POST,instance=request.user.donor)
+        if donor_request_form.is_valid():
+            donor_request_form_copy = donor_request_form.save(commit=False)
+            donor_request_form_copy.save()
+            messages.success(request, 'Request Created Successfully')
+            return redirect('home')
+        else:
+            messages.error(request,'bad data passed')
+            return render(request, 'services/request.html', {'donor_request_form': donor_request_form, 'donor_request_form_errors': donor_request_form.errors})
+    else:
+        donor_request_form = DonorRequestForm()
+        return render(request, 'services/request.html', {'donor_request_form': donor_request_form})

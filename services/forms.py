@@ -13,7 +13,7 @@ class DonorForm(forms.ModelForm):
         fields=['role','blood_type','house_no','state','pin_code','contact','date_of_birth']
 
 class UserForm(forms.ModelForm):
-    email = forms.EmailField(required = True)
+    email = forms.EmailField(disabled= True)
     class Meta:
         model = User
         fields = ['username','email','first_name','last_name']
