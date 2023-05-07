@@ -1,13 +1,14 @@
 from django.shortcuts import render,redirect
+from django.utils import timezone
 from .forms import *
 from django.contrib.auth import authenticate, login
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from .models import Donor
+from .models import Donor,DonorRequest
 from django.contrib import messages
-from .filters import DonorFilter
+from .filters import DonorFilter,RequestFilter
 from .aiding_functions import find_compatible_match
 # Create your views here.
 
@@ -59,11 +60,17 @@ def profile(request, slug):
         return render(request, 'services/profile.html', {'user_form': user_form, 'donor_form': donor_form})
 
 @login_required
-def request(request,slug):
+def donor_request(request,slug):
+    donor = request.user.donor
+    existing_request = DonorRequest.objects.filter(donor=donor).exists()
+    if existing_request:
+        messages.info(request,"You already have a request pending")
+        return redirect("home")
     if request.method == 'POST':
-        donor_request_form = DonorRequestForm(request.POST,instance=request.user.donor)
+        donor_request_form = DonorRequestForm(request.POST)
         if donor_request_form.is_valid():
             donor_request_form_copy = donor_request_form.save(commit=False)
+            donor_request_form_copy.donor=request.user.donor
             donor_request_form_copy.save()
             messages.success(request, 'Request Created Successfully')
             return redirect('home')
@@ -73,3 +80,25 @@ def request(request,slug):
     else:
         donor_request_form = DonorRequestForm()
         return render(request, 'services/request.html', {'donor_request_form': donor_request_form})
+
+@login_required
+def request_view(request,slug):
+    donor = request.user.donor
+    donor_request = DonorRequest.objects.filter(donor=donor)
+    blood_type=donor.blood_type
+    filter = RequestFilter(request.GET, queryset=DonorRequest.objects.filter(blood_type=blood_type)) 
+    records = filter.qs
+    records=DonorRequest.objects.exclude(donor=donor)
+    return render(request, "services/views.html", {'filter': filter,"records":records})
+
+
+# @login_required
+# def request_view(request,slug):
+#     donor = request.user.donor
+#     existing_request = DonorRequest.objects.filter(donor=donor).exists()
+#     if not existing_request:
+#         messages.info(request,"You don't have any request pending")
+#         return redirect("home")
+#     else:
+#         request = DonorRequest.objects.get(donor=donor)
+#         return render(request,"services/request_view.html",{"request":request})

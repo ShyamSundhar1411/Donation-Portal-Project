@@ -11,6 +11,14 @@
                     {{donor_request_form.blood_type|as_crispy_field}}
                 </div>
             </div>
+            <div class="row form-row ">
+                <div class="col">
+                    {{donor_request_form.requirements|as_crispy_field}}
+                </div>
+            </div>
+            <div class="col">
+                {{donor_request_form.include_compatible_blood|as_crispy_field}}
+            </div>
             <div class = "d-inline-block py-3">
                 <button type = "submit" class = "margin-bottom btn btn-primary me-2 py-1">Submit Request</button>
             </div>

@@ -1,7 +1,7 @@
 import django_filters
 from django import forms
 from django_filters import ChoiceFilter, DateRangeFilter
-from .models import Donor
+from .models import Donor,DonorRequest
 
 class DonorFilter(django_filters.FilterSet):
     pin_code = django_filters.CharFilter(lookup_expr='icontains',label = "Pin Code Lookup")
@@ -11,3 +11,8 @@ class DonorFilter(django_filters.FilterSet):
     class Meta:
         model = Donor
         fields = ['blood_type','state']
+
+class RequestFilter(django_filters.FilterSet):
+    class Meta:
+        model = DonorRequest
+        fields = ['blood_type','include_compatible_blood']

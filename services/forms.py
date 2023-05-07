@@ -19,6 +19,7 @@ class UserForm(forms.ModelForm):
         fields = ['username','email','first_name','last_name']
 
 class DonorRequestForm(forms.ModelForm):
+    requirements=forms.CharField(max_length=300,required=False)
     class Meta:
         model = DonorRequest
-        fields = ['location','blood_type']
+        fields = ['location','blood_type','requirements','include_compatible_blood']
