@@ -6,7 +6,7 @@ from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from .models import Donor,DonorRequest
+from .models import Donor,DonorRequest,DonorApproval
 from django.contrib import messages
 from .filters import DonorFilter,RequestFilter
 from .aiding_functions import find_compatible_match
@@ -87,11 +87,20 @@ def request_view(request,slug):
     donor_request = DonorRequest.objects.filter(donor=donor)
     blood_type=donor.blood_type
     filter = RequestFilter(request.GET, queryset=DonorRequest.objects.filter(blood_type=blood_type)) 
-    records = filter.qs
-    records=DonorRequest.objects.exclude(donor=donor)
+    records = filter.qs.exclude(donorapproval__donation_status='Approved')
+    records = records.exclude(donor=donor)
     return render(request, "services/views.html", {'filter': filter,"records":records})
 
 
+@login_required
+def accept_request(request,slug):
+    if request.method == 'POST':
+        donor = request.user.donor
+        donor_request=DonorRequest.objects.get(donor=Donor.objects.get(slug=slug))
+        donor_approval = DonorApproval.objects.create(donor_request=donor_request,donor=donor)
+        messages.success(request, 'Thank you for your initiative! Your response has been recorded successfully')
+        return redirect('home')
+    
 # @login_required
 # def request_view(request,slug):
 #     donor = request.user.donor
