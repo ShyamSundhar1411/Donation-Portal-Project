@@ -51,18 +51,12 @@
                     </div>
                   </div>
                   <br>
-                  <form method = 'POST' enctype = 'multipart/form-data'>
-                    {% csrf_token %}
                   <div class="d-inline-block">
                     <a
                       class="btn btn-primary"
                       href="{% url 'accept_request' request.donor.slug %}"
-                      style="margin-bottom: 5px"
-                      target="_blank"
-                      >   Donate </a            
-                    >
+                      style="margin-bottom: 5px">Donate </a>
                   </div>
-                </form>
             </div>
         </div>
         {% endfor %} {% else %}

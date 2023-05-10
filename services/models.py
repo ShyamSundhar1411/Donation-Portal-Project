@@ -45,7 +45,7 @@ class DonorRequest(models.Model):
             self.date = timezone.now()
         return super().save(*args, **kwargs)
     def __str__(self):
-        return str(self.location)+' -> '+str(self.blood_type)
+        return str(self.donor.user.username)+' -> '+str(self.blood_type)+' -> '+str(self.location)
 
 class DonorApproval(models.Model):
     donor_request=models.ForeignKey(DonorRequest,on_delete=models.CASCADE)
@@ -57,7 +57,7 @@ class DonorApproval(models.Model):
             self.date_approved = timezone.now()
         return super().save(*args, **kwargs)
     def __str__(self):
-        return str(self.donor_request.donor.user.username)+' -> '+str(self.donor_request.blood_type)
+        return str(self.donor_request.donor.user.username)+' wants'+' -> '+str(self.donor_request.blood_type)
 
 
 @receiver(post_save, sender=User)
