@@ -28,4 +28,10 @@ APPROVAL_STATUS=[
     ("Pending","Pending"),
     ("Rejected","Rejected"),
     ("Approved","Approved"),
+    ("Completed","Completed"),
+]
+
+REQUEST_STATUS=[
+    ("Pending","Pending"),
+    ("Completed","Completed"),
 ]

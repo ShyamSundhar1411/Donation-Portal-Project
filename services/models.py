@@ -35,6 +35,7 @@ class Donor(models.Model):
 
 class DonorRequest(models.Model):
     donor=models.ForeignKey(Donor,on_delete=models.CASCADE)
+    request_status=models.CharField(max_length=100,choices = REQUEST_STATUS,default = "Pending")
     date=models.DateTimeField(auto_now_add=False)
     location=models.CharField(max_length=300,help_text="Hospital Location")
     blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
@@ -49,7 +50,7 @@ class DonorRequest(models.Model):
 
 class DonorApproval(models.Model):
     donor_request=models.ForeignKey(DonorRequest,on_delete=models.CASCADE)
-    donor=models.ForeignKey(Donor,on_delete=models.CASCADE)
+    donor_a=models.ForeignKey(Donor,on_delete=models.CASCADE)
     donation_status=models.CharField(max_length = 100,choices = APPROVAL_STATUS,default = "Pending")
     date_approved = models.DateTimeField(auto_now_add=False)
     def save(self, *args, **kwargs):

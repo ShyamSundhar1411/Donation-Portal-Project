@@ -66,7 +66,7 @@ def donor_request(request,slug):
             request, "Verify your account by adding Contact Number before proceeding to the portal")
         return redirect("profile", slug=request.user.donor.slug)
     donor = request.user.donor
-    existing_request = DonorRequest.objects.filter(donor=donor).exists()
+    existing_request = DonorRequest.objects.filter(donor=donor,request_status="Pending").exists()
     if existing_request:
         messages.info(request,"You already have a request pending")
         return redirect("home")
@@ -91,14 +91,19 @@ def request_view(request,slug):
         messages.info(
             request, "Verify your account by adding Contact Number before proceeding to the portal")
         return redirect("profile", slug=request.user.donor.slug)
-    donor = request.user.donor
-    donor_request = DonorRequest.objects.filter(donor=donor)
-    blood_type=donor.blood_type
-    filter = RequestFilter(request.GET, queryset=DonorRequest.objects.filter(blood_type=blood_type)) 
-    records = filter.qs.exclude(donorapproval__donation_status='Approved')
-    records = records.exclude(donorapproval__donor=donor)
-    records = records.exclude(donor=donor)
-    return render(request, "services/views.html", {'filter': filter,"records":records})
+    donor = request.user.donor 
+    request_donor = DonorRequest.objects.filter(donor=donor, request_status="Pending").first()
+    accept_donor=DonorApproval.objects.filter(donor_a=donor,donation_status="Pending").first()
+    if accept_donor:
+        return render(request, "services/views.html", {'request_donor':request_donor,'accept_donor':accept_donor})
+    else:
+        blood_type=donor.blood_type
+        filter = RequestFilter(request.GET, queryset=DonorRequest.objects.filter(blood_type=blood_type)) 
+        records = filter.qs.exclude(donorapproval__donation_status='Approved')
+        records = records.exclude(donorapproval__donor_a=donor)
+        records = records.exclude(donor=donor)
+        return render(request, "services/views.html", {'filter': filter,'records':records,'request_donor':request_donor,'accept_donor':accept_donor})
+        
 
 
 @login_required
@@ -109,7 +114,7 @@ def accept_request(request,slug):
         return redirect("profile", slug=request.user.donor.slug)
     accepting_donor = request.user.donor
     donor_request=DonorRequest.objects.get(donor=Donor.objects.get(slug=slug))
-    donor_approval = DonorApproval.objects.create(donor_request=donor_request,donor=accepting_donor)
+    donor_approval = DonorApproval.objects.create(donor_request=donor_request,donor_a=accepting_donor)
     messages.success(request, 'Thank you for your initiative! Your response has been recorded successfully')
     return redirect('home')
     

@@ -20,8 +20,28 @@
                 {{donor_request_form.include_compatible_blood|as_crispy_field}}
             </div>
             <div class = "d-inline-block py-3">
-                <button type = "submit" class = "margin-bottom btn btn-primary me-2 py-1">Submit Request</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Confirm
+                </button>
             </div>
+            <!-- Vertically centered modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">CONFIRM!</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Would you like to submit your request?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit Request</button>
+                    </div>
+                  </div>
+                </div>
+              </div>            
         </div>
     </form>
 </div>
