@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import User
 from .choices import *
 from django.dispatch import receiver
@@ -31,6 +32,32 @@ class Donor(models.Model):
             {}
         """.format(self.house_no,self.state,self.pin_code)
         return my_address
+
+class DonorRequest(models.Model):
+    donor=models.ForeignKey(Donor,on_delete=models.CASCADE)
+    date=models.DateTimeField(auto_now_add=False)
+    location=models.CharField(max_length=300,help_text="Hospital Location")
+    blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
+    include_compatible_blood=models.BooleanField(default=False)
+    requirements=models.CharField(max_length=300,null=True,blank=True)
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.date = timezone.now()
+        return super().save(*args, **kwargs)
+    def __str__(self):
+        return str(self.donor.user.username)+' -> '+str(self.blood_type)+' -> '+str(self.location)
+
+class DonorApproval(models.Model):
+    donor_request=models.ForeignKey(DonorRequest,on_delete=models.CASCADE)
+    donor=models.ForeignKey(Donor,on_delete=models.CASCADE)
+    donation_status=models.CharField(max_length = 100,choices = APPROVAL_STATUS,default = "Pending")
+    date_approved = models.DateTimeField(auto_now_add=False)
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.date_approved = timezone.now()
+        return super().save(*args, **kwargs)
+    def __str__(self):
+        return str(self.donor_request.donor.user.username)+' wants'+' -> '+str(self.donor_request.blood_type)
 
 
 @receiver(post_save, sender=User)

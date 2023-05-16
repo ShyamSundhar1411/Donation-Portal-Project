@@ -85,6 +85,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'profile' user.donor.slug %}">Profile</a>
                     </li>
+                    {% if user.donor.role != 'Unauthorized' %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'request' user.donor.slug %}">Blood Request</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'request_view' user.donor.slug %}">View Request</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     </li>
