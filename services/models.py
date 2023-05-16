@@ -36,7 +36,8 @@ class Donor(models.Model):
 class DonorRequest(models.Model):
     donor=models.ForeignKey(Donor,on_delete=models.CASCADE)
     request_status=models.CharField(max_length=100,choices = REQUEST_STATUS,default = "Pending")
-    date=models.DateTimeField(auto_now_add=False)
+    date_requested=models.DateTimeField(auto_now_add=True)
+    required_by=models.DateField(auto_now_add=False)
     location=models.CharField(max_length=300,help_text="Hospital Location")
     blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
     include_compatible_blood=models.BooleanField(default=False)

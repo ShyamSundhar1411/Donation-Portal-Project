@@ -15,6 +15,9 @@
           <div class="col">
             {{donor_request_form.requirements|as_crispy_field}}
           </div>
+          <div class="col">
+            {{donor_request_form.required_by|as_crispy_field}}
+          </div>
         </div>
         <div class="col">
           {{donor_request_form.include_compatible_blood|as_crispy_field}}
@@ -27,4 +30,22 @@
       </div>
     </form>
 </div>
+<script>
+  function addDays(days, date = new Date()) {
+    const dateCopy = new Date(date);
+    dateCopy.setDate(date.getDate() + days);
+    return dateCopy;
+  }
+
+  $(function() {
+    const today = new Date();
+    const maxDate = addDays(14, today);
+
+    $("#id_required_by").datepicker({
+      format: 'yyyy-mm-dd',
+      startDate: today,
+      endDate: maxDate
+    });
+  });
+</script>
 {% endblock %}

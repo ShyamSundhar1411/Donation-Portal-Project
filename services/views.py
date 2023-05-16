@@ -96,7 +96,7 @@ def view_request(request,slug):
     blood_type=donor.blood_type
     filter = RequestFilter(request.GET, queryset=DonorRequest.objects.filter(blood_type=blood_type)) 
     records = filter.qs.exclude(donorapproval__donation_status='Approved')
-    records = records.exclude(donorapproval__donor=donor)
+    records = records.exclude(donorapproval__donor_a=donor)
     records = records.exclude(donor=donor)
     return render(request, "services/view_requests.html", {'filter': filter,"records":records})
 
