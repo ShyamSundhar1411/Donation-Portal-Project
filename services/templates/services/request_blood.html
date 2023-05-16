@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content %} {% load crispy_forms_tags %} {% load custom_tags %}
+<div class="container">
+    <h3 class = "text-center">Request Blood</h3>
+    <hr/>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="card card-body border border-dark">
+        <div class="row form-row">
+          <div class="col">{{donor_request_form.location|as_crispy_field}}</div>
+          <div class="col">
+            {{donor_request_form.blood_type|as_crispy_field}}
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col">
+            {{donor_request_form.requirements|as_crispy_field}}
+          </div>
+        </div>
+        <div class="col">
+          {{donor_request_form.include_compatible_blood|as_crispy_field}}
+        </div>
+        <div class="d-inline-block py-3">
+          <button type="submit" class="margin-bottom btn btn-primary me-2 py-1">
+            Submit Request
+          </button>
+        </div>
+      </div>
+    </form>
+</div>
+{% endblock %}
