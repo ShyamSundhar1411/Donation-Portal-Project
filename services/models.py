@@ -36,7 +36,7 @@ class Donor(models.Model):
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        Donor.objects.create(user=instance, role="Unauthorized",address=" ")
+        Donor.objects.create(user=instance, role="Unauthorized")
         instance.donor.save()
 
 
