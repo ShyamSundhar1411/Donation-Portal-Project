@@ -1,15 +1,15 @@
-from django.shortcuts import render,redirect
-from django.utils import timezone
+
 from .forms import *
-from django.contrib.auth import authenticate, login
 from django.views import generic
+from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.urls import reverse_lazy
 from .models import Donor,DonorRequest,DonorApproval
 from django.contrib import messages
 from .filters import DonorFilter,RequestFilter
-from .aiding_functions import find_compatible_match
+from .aiding_functions import find_compatible_match,is_authorized
+
 # Create your views here.
 
 
@@ -113,3 +113,7 @@ def accept_request(request,slug):
     messages.success(request, 'Thank you for your initiative! Your response has been recorded successfully')
     return redirect('home')
     
+@login_required
+@user_passes_test(lambda user:is_authorized(user))
+def view_all_request_admin(request):
+    return render(request,"services/view_all_requests.html")

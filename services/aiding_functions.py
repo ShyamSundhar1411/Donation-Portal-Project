@@ -16,3 +16,9 @@ def find_compatible_match(blood_type):
     for i in BLOOD_MATCHING_TYPES:
         if i[0] == blood_type:
             return i[-1]
+
+def is_authorized(user):
+    status = False
+    if user.donor.role == "Admin" or user.is_superuser:
+        status = True
+    return status
