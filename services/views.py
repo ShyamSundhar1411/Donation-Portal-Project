@@ -1,15 +1,15 @@
-from django.shortcuts import render,redirect
-from django.utils import timezone
+
 from .forms import *
-from django.contrib.auth import authenticate, login
 from django.views import generic
+from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.urls import reverse_lazy
 from .models import Donor,DonorRequest,DonorApproval
 from django.contrib import messages
 from .filters import DonorFilter,RequestFilter
-from .aiding_functions import find_compatible_match
+from .aiding_functions import find_compatible_match,is_authorized
+
 # Create your views here.
 
 
@@ -24,7 +24,7 @@ def home(request):
         messages.info(
             request, "Verify your account by adding Contact Number before proceeding to the portal")
         return redirect("profile", slug=request.user.donor.slug)
-    filter = DonorFilter(request.GET, queryset=Donor.objects.filter(role = "Donor",user__is_superuser = False)) 
+    filter = DonorFilter(request.GET, queryset=Donor.objects.filter(role = "Donor",user__is_superuser = False).exclude(user = request.user)) 
     checker = request.GET.get("show_compatible_types_check","")
     records = filter.qs
     if checker=="on":
@@ -80,30 +80,25 @@ def donor_request(request,slug):
             return redirect('home')
         else:
             messages.error(request,'bad data passed')
-            return render(request, 'services/request.html', {'donor_request_form': donor_request_form, 'donor_request_form_errors': donor_request_form.errors})
+            return render(request, 'services/request_blood.html', {'donor_request_form': donor_request_form, 'donor_request_form_errors': donor_request_form.errors})
     else:
         donor_request_form = DonorRequestForm()
-        return render(request, 'services/request.html', {'donor_request_form': donor_request_form})
+        return render(request, 'services/request_blood.html', {'donor_request_form': donor_request_form})
 
 @login_required
-def request_view(request,slug):
+def view_request(request,slug):
     if not request.user.donor.contact:
         messages.info(
             request, "Verify your account by adding Contact Number before proceeding to the portal")
         return redirect("profile", slug=request.user.donor.slug)
-    donor = request.user.donor 
-    request_donor = DonorRequest.objects.filter(donor=donor, request_status="Pending").first()
-    accept_donor=DonorApproval.objects.filter(donor_a=donor,donation_status="Pending").first()
-    if accept_donor:
-        return render(request, "services/views.html", {'request_donor':request_donor,'accept_donor':accept_donor})
-    else:
-        blood_type=donor.blood_type
-        filter = RequestFilter(request.GET, queryset=DonorRequest.objects.filter(blood_type=blood_type)) 
-        records = filter.qs.exclude(donorapproval__donation_status='Approved')
-        records = records.exclude(donorapproval__donor_a=donor)
-        records = records.exclude(donor=donor)
-        return render(request, "services/views.html", {'filter': filter,'records':records,'request_donor':request_donor,'accept_donor':accept_donor})
-        
+    donor = request.user.donor
+    donor_request = DonorRequest.objects.filter(donor=donor)
+    blood_type=donor.blood_type
+    filter = RequestFilter(request.GET, queryset=DonorRequest.objects.filter(blood_type=blood_type)) 
+    records = filter.qs.exclude(donorapproval__donation_status='Approved')
+    records = records.exclude(donorapproval__donor=donor)
+    records = records.exclude(donor=donor)
+    return render(request, "services/view_requests.html", {'filter': filter,"records":records})
 
 
 @login_required
@@ -118,13 +113,7 @@ def accept_request(request,slug):
     messages.success(request, 'Thank you for your initiative! Your response has been recorded successfully')
     return redirect('home')
     
-# @login_required
-# def request_view(request,slug):
-#     donor = request.user.donor
-#     existing_request = DonorRequest.objects.filter(donor=donor).exists()
-#     if not existing_request:
-#         messages.info(request,"You don't have any request pending")
-#         return redirect("home")
-#     else:
-#         request = DonorRequest.objects.get(donor=donor)
-#         return render(request,"services/request_view.html",{"request":request})
+@login_required
+@user_passes_test(lambda user:is_authorized(user))
+def view_all_request_admin(request):
+    return render(request,"services/view_all_requests.html")
