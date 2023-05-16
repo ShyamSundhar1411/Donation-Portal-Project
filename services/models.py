@@ -40,10 +40,11 @@ class DonorRequest(models.Model):
     blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
     include_compatible_blood=models.BooleanField(default=False)
     requirements=models.CharField(max_length=300,null=True,blank=True)
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.date = timezone.now()
-        return super().save(*args, **kwargs)
+    slug = models.SlugField(max_length = 100,blank = True)
+    def __save__(self,*args,**kwargs):
+        if not self.slug:
+            self.slug = uuid.uuid4()
+        super(DonorRequest,self).save(*args,**kwargs)
     def __str__(self):
         return str(self.donor.user.username)+' -> '+str(self.blood_type)+' -> '+str(self.location)
 
@@ -52,10 +53,11 @@ class DonorApproval(models.Model):
     donor=models.ForeignKey(Donor,on_delete=models.CASCADE)
     donation_status=models.CharField(max_length = 100,choices = APPROVAL_STATUS,default = "Pending")
     date_approved = models.DateTimeField(auto_now_add=False)
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.date_approved = timezone.now()
-        return super().save(*args, **kwargs)
+    slug = models.SlugField(max_length = 100,blank = True)
+    def __save__(self,*args,**kwargs):
+        if not self.slug:
+            self.slug = uuid.uuid4()
+        super(DonorApproval,self).save(*args,**kwargs)
     def __str__(self):
         return str(self.donor_request.donor.user.username)+' wants'+' -> '+str(self.donor_request.blood_type)
 
