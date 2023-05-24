@@ -35,13 +35,13 @@ class Donor(models.Model):
 
 class DonorRequest(models.Model):
     donor=models.ForeignKey(Donor,on_delete=models.CASCADE)
-    request_status=models.CharField(max_length=100,choices = REQUEST_STATUS,default = "Pending")
     date_requested=models.DateTimeField(auto_now_add=True)
     required_by=models.DateField(auto_now_add=False)
     location=models.CharField(max_length=300,help_text="Hospital Location")
     blood_type=models.CharField(max_length=100,choices=BLOOD_CHOICES)
     include_compatible_blood=models.BooleanField(default=False)
     requirements=models.CharField(max_length=300,null=True,blank=True)
+    request_status=models.CharField(max_length=100,choices = REQUEST_STATUS,default = "Pending")
     slug = models.SlugField(max_length = 100,blank = True)
     def __save__(self,*args,**kwargs):
         if not self.slug:
@@ -50,16 +50,16 @@ class DonorRequest(models.Model):
     def __str__(self):
         return str(self.donor.user.username)+' -> '+str(self.blood_type)+' -> '+str(self.location)
 
-class DonorApproval(models.Model):
+class DonationApplication(models.Model):
     donor_request=models.ForeignKey(DonorRequest,on_delete=models.CASCADE)
-    donor_a=models.ForeignKey(Donor,on_delete=models.CASCADE)
-    donation_status=models.CharField(max_length = 100,choices = APPROVAL_STATUS,default = "Pending")
+    donor=models.ForeignKey(Donor,on_delete=models.CASCADE)
+    status=models.CharField(max_length = 100,choices = APPROVAL_STATUS,default = "Pending")
     date_approved = models.DateTimeField(auto_now_add=False)
     slug = models.SlugField(max_length = 100,blank = True)
     def __save__(self,*args,**kwargs):
         if not self.slug:
             self.slug = uuid.uuid4()
-        super(DonorApproval,self).save(*args,**kwargs)
+        super(DonationApplication,self).save(*args,**kwargs)
     def __str__(self):
         return str(self.donor_request.donor.user.username)+' wants'+' -> '+str(self.donor_request.blood_type)
 

@@ -87,10 +87,10 @@
                     </li>
                     {% if user.donor.role != 'Unauthorized' %}
                     <li class="nav-item">
-                      <a class="nav-link" href="{% url 'request_blood' user.donor.slug %}">Request Blood</a>
+                      <a class="nav-link" href="{% url 'request_blood' %}">Request Blood</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="{% url 'view_request' user.donor.slug %}">View Request</a>
+                      <a class="nav-link" href="#">View Request</a>
                     </li>
                     {% endif %}
                     <li class="nav-item">

@@ -1,11 +1,12 @@
 
 from .forms import *
+from .models import *
 from django.views import generic
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.urls import reverse_lazy
-from .models import Donor,DonorRequest,DonorApproval
+
 from django.contrib import messages
 from .filters import DonorFilter,RequestFilter
 from .aiding_functions import find_compatible_match,is_authorized
@@ -60,7 +61,7 @@ def profile(request, slug):
         return render(request, 'services/profile.html', {'user_form': user_form, 'donor_form': donor_form})
 
 @login_required
-def donor_request(request,slug):
+def blood_donation_request(request):
     if not request.user.donor.contact:
         messages.info(
             request, "Verify your account by adding Contact Number before proceeding to the portal")
@@ -86,7 +87,7 @@ def donor_request(request,slug):
         return render(request, 'services/request_blood.html', {'donor_request_form': donor_request_form})
 
 @login_required
-def view_request(request,slug):
+def view_request(request):
     if not request.user.donor.contact:
         messages.info(
             request, "Verify your account by adding Contact Number before proceeding to the portal")
@@ -95,8 +96,8 @@ def view_request(request,slug):
     donor_request = DonorRequest.objects.filter(donor=donor)
     blood_type=donor.blood_type
     filter = RequestFilter(request.GET, queryset=DonorRequest.objects.filter(blood_type=blood_type)) 
-    records = filter.qs.exclude(donorapproval__donation_status='Approved')
-    records = records.exclude(donorapproval__donor_a=donor)
+    records = filter.qs.exclude(donorapplication__status='Approved')
+    records = records.exclude(donorapplication__donor=donor)
     records = records.exclude(donor=donor)
     return render(request, "services/view_requests.html", {'filter': filter,"records":records})
 
@@ -109,7 +110,7 @@ def accept_request(request,slug):
         return redirect("profile", slug=request.user.donor.slug)
     accepting_donor = request.user.donor
     donor_request=DonorRequest.objects.get(donor=Donor.objects.get(slug=slug))
-    donor_approval = DonorApproval.objects.create(donor_request=donor_request,donor_a=accepting_donor)
+    donor_approval = DonationApplication.objects.create(donor_request=donor_request,donor_a=accepting_donor)
     messages.success(request, 'Thank you for your initiative! Your response has been recorded successfully')
     return redirect('home')
     
