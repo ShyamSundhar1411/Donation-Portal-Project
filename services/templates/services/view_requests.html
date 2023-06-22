@@ -48,12 +48,12 @@
 <div class="container">
     <hr />
     <div class="row">
-        {% if records %} {% for request in records %}
+        {% if filter.qs %} {% for request in filter.qs %}
         <div class="col-lg-4 col-md-6">
             <div class="card card-body border border-dark" style = 'margin-bottom: 15px;'>
                 <p class = "card-text profile-text">First Name : {{request.donor.user.first_name}}</p>
                 <p class = "card-text profile-text">Last Name : {{request.donor.user.last_name}}</p>
-                <p class = "card-text profile-text">Requested Blood Type : {{request.blood_type}}</p>
+                <p class = "card-text profile-text">Requested Blood Type : <span class="badge bg-red">{{request.blood_type}}</span></p>
                 <div class="accordion accordion-borderless" id="accordionFlushExampleX{{donor.slug}}">
                     <div class="accordion-item">
                       <h2 class="accordion-header" id="flush-headingTwoX{{request.donor.slug}}1">
@@ -78,7 +78,7 @@
                   <div class="d-inline-block">
                     <a
                       class="btn btn-primary"
-                      href="{% url 'accept_request' request.donor.slug %}"
+                      href="#"
                       style="margin-bottom: 5px">Donate </a>
                   </div>
             </div>

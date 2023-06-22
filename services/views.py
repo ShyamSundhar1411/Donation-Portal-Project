@@ -92,14 +92,8 @@ def view_request(request):
         messages.info(
             request, "Verify your account by adding Contact Number before proceeding to the portal")
         return redirect("profile", slug=request.user.donor.slug)
-    donor = request.user.donor
-    donor_request = DonorRequest.objects.filter(donor=donor)
-    blood_type=donor.blood_type
-    filter = RequestFilter(request.GET, queryset=DonorRequest.objects.filter(blood_type=blood_type)) 
-    records = filter.qs.exclude(donorapplication__status='Approved')
-    records = records.exclude(donorapplication__donor=donor)
-    records = records.exclude(donor=donor)
-    return render(request, "services/view_requests.html", {'filter': filter,"records":records})
+    filter = RequestFilter(request.GET, queryset=DonorRequest.objects.filter(blood_type=request.user.donor.blood_type)) 
+    return render(request, "services/view_requests.html", {'filter': filter})
 
 
 @login_required
@@ -117,4 +111,5 @@ def accept_request(request,slug):
 @login_required
 @user_passes_test(lambda user:is_authorized(user))
 def view_all_request_admin(request):
-    return render(request,"services/view_all_requests.html")
+    requests = DonorRequest.objects.all()
+    return render(request,"services/view_all_requests.html",{"requests":requests})

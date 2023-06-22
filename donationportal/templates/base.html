@@ -2,7 +2,11 @@
 <html lang="en">
   {% load static %}
   <head>
-    <link rel='shortcut icon' type='image/x-icon' href="{% static 'favicon.ico' %}" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'favicon.ico' %}"
+    />
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -65,51 +69,113 @@
 
     <!-- Template Main CSS File -->
     <link href="{% static 'assets/css/main.css' %}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
+      integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE="
+      crossorigin="anonymous"
+    />
     <title>Blood Bank</title>
   </head>
   <body>
     <header id="header">
-        <div class = "container">
-            <nav class="navbar navbar-expand-lg navbar-light" style = "box-shadow:none;">
-                <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}">
-                  <img src="{% static 'blood-bank-logo.png' %}" alt="" width="30" height="24">Blood Bank</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav ms-auto">
-                    
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'profile' user.donor.slug %}">Profile</a>
+      <div class="container">
+        <nav
+          class="navbar navbar-expand-lg navbar-light"
+          style="box-shadow: none"
+        >
+          <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">
+              <img
+                src="{% static 'blood-bank-logo.png' %}"
+                alt=""
+                width="30"
+                height="24"
+              />Blood Bank</a
+            >
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarColor01"
+              aria-controls="navbarColor01"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+              <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {{user.username}}
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" href="{% url 'profile' user.donor.slug %}"
+                        ><i class="fa-solid fa-user"></i> My Profile</a
+                      >
                     </li>
-                    {% if user.donor.role != 'Unauthorized' %}
-                    <li class="nav-item">
-                      <a class="nav-link" href="{% url 'request_blood' %}">Request Blood</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">View Request</a>
-                    </li>
+                    {% if user.donor.role != "Unauthorized" %}
+                      <li>
+                        <a class="dropdown-item" href="{% url 'view_request' %}"
+                          ><i class="fa-solid fa-box"></i> View Donation Requests</a
+                        >
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#"
+                          ><i class="fa-solid fa-box"></i> View Status</a
+                        >
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="{% url 'request_blood' %}"
+                          ><i class="fa-solid fa-box"></i> Request Blood</a
+                        >
+                      </li>
+                      {% if user.donor.role == "Admin" %}
+                      <li>
+                        <a class="dropdown-item" href="#"
+                          ><i class="fa-solid fa-box"></i> Manage Requests</a
+                        >
+                      </li>
+                      {% endif %}
                     {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'logout' %}"
+                        ><i class="fa-solid fa-right-from-bracket"></i>
+                        Logout</a
+                      >
                     </li>
-                    
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'social:begin' 'google-oauth2' %}">Signup</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'social:begin' 'google-oauth2' %}">Login</a>
-                        </li>
-                    {% endif %}
-                    </ul>
-                </div>
-            </nav>
-        </div>
-      
+                  </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="{% url 'social:begin' 'google-oauth2' %}"
+                    >Signup</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="{% url 'social:begin' 'google-oauth2' %}"
+                    >Login</a
+                  >
+                </li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
     </header>
     <div class="container">
       {% include 'messages.html' %} {% block content %} {% endblock %}
@@ -132,7 +198,11 @@
     <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
     <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
+      integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k="
+      crossorigin="anonymous"
+    ></script>
     <!-- Template Main JS File -->
     <script src="{% static 'assets/js/main.js' %}"></script>
   </body>
