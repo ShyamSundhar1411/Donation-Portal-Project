@@ -103,8 +103,8 @@ def accept_request(request,slug):
             request, "Verify your account by adding Contact Number before proceeding to the portal")
         return redirect("profile", slug=request.user.donor.slug)
     accepting_donor = request.user.donor
-    donor_request=DonorRequest.objects.get(donor=Donor.objects.get(slug=slug))
-    donor_approval = DonationApplication.objects.create(donor_request=donor_request,donor_a=accepting_donor)
+    donor_request=DonorRequest.objects.get(slug = slug)
+    donor_approval = DonationApplication.objects.create(donor_request=donor_request,donor = accepting_donor,status = "Pending")
     messages.success(request, 'Thank you for your initiative! Your response has been recorded successfully')
     return redirect('home')
     

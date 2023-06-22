@@ -141,7 +141,7 @@
                       </li>
                       {% if user.donor.role == "Admin" %}
                       <li>
-                        <a class="dropdown-item" href="#"
+                        <a class="dropdown-item" href="{% url 'view_all_request' %}"
                           ><i class="fa-solid fa-box"></i> Manage Requests</a
                         >
                       </li>

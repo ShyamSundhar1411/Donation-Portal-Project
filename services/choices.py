@@ -32,6 +32,6 @@ APPROVAL_STATUS=[
 ]
 
 REQUEST_STATUS=[
-    ("Pending","Pending"),
+    ("Awaiting Donor","Awaiting Donor"),
     ("Completed","Completed"),
 ]

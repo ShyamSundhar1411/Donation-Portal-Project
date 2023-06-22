@@ -43,7 +43,7 @@ class DonorRequest(models.Model):
     requirements=models.CharField(max_length=300,null=True,blank=True)
     request_status=models.CharField(max_length=100,choices = REQUEST_STATUS,default = "Pending")
     slug = models.SlugField(max_length = 100,blank = True)
-    def __save__(self,*args,**kwargs):
+    def save(self,*args,**kwargs):
         if not self.slug:
             self.slug = uuid.uuid4()
         super(DonorRequest,self).save(*args,**kwargs)
@@ -54,7 +54,8 @@ class DonationApplication(models.Model):
     donor_request=models.ForeignKey(DonorRequest,on_delete=models.CASCADE)
     donor=models.ForeignKey(Donor,on_delete=models.CASCADE)
     status=models.CharField(max_length = 100,choices = APPROVAL_STATUS,default = "Pending")
-    date_approved = models.DateTimeField(auto_now_add=False)
+    date_approved = models.DateTimeField(auto_now_add=False,blank = True)
+    date_created = models.DateTimeField(auto_now_add = True)
     slug = models.SlugField(max_length = 100,blank = True)
     def __save__(self,*args,**kwargs):
         if not self.slug:
